@@ -23,6 +23,8 @@ java EmployeeManagementSystem
 
 ## Program Features
 
+The Employee Management System is a menu driven program with the following options:
+
 ### 1. Add Employee
 Prompts for:
 - Employee ID  
@@ -30,34 +32,56 @@ Prompts for:
 - Position  
 - Salary  
 
-Validations include:
-- Empty inputs  
-- Numeric-only names  
-- Special characters in name or position  
-- Duplicate employee IDs  
-- Negative salary or ID values  
+Validations:
+- Employee ID must be numeric and positive  
+- Name and position must contain only alphabetic characters and spaces  
+- Salary must be numeric and non negative  
+- Inputs cannot be left empty  
+- Employee ID must be unique in the list  
+
+If any validation fails, a clear error message is shown and the user is re prompted.
 
 ### 2. Delete Employee
-- Deletes an employee using their ID.  
-- Handles deleting from an empty list, deleting the head node, and invalid IDs safely.
+- Prompts for an Employee ID to delete.  
+- Handles the following cases:
+  - Deleting from an empty list  
+  - Deleting the head node  
+  - Deleting a middle or last node  
+  - Attempting to delete a non existent ID  
+
+For invalid or non numeric IDs, an error message is shown and the operation is safely cancelled.
 
 ### 3. Display Employees
-- Traverses and prints all employee records in the linked list in insertion order.
+- Traverses the linked list and prints all employee records in order.  
+- If the list is empty, a user friendly message is displayed instead of printing nothing.
+
+### 4. Exit
+- Safely exits the program from the menu.  
+- Prevents accidental exit by requiring the user to explicitly choose the exit option from the menu.
 
 ## Design Choices
-- Input validation implemented using helper functions.  
-- Encapsulation enforced by keeping Employee fields private.  
-- Duplicate ID checks maintain data consistency.  
-- Salary is always validated to be a positive number.
 
-## Challenges Faced
-- Validating names and positions to prevent numeric or special-character input.  
-- Ensuring deletion logic works correctly for head, middle, and non-existent nodes.  
-- Scanner buffer issues that required code adjustments.  
-- Handling invalid menu options cleanly.
+1. **Centralised input handling**  
+   Helper functions in `EmployeeManagementSystem` are used to validate and read input for menu choices, IDs, names, positions, and salary.  
+   These helpers check for:
+   - Empty input  
+   - Special characters where not allowed  
+   - Numbers in name and position  
+   - Negative values for menu choice, employee ID, and salary  
 
-## Possible Improvements
-- Display employees in a well-formatted tabular layout.  
-- Add a confirmation prompt before deletions.  
-- Reduce repetitive validation logic.  
-- Improve traversal efficiency for larger lists.
+2. **Custom linked list implementation**  
+   A singly linked list (`EmployeeLinkedList`) is used to store `Employee` objects dynamically instead of using built in Java collections. This reinforces the core linked list concepts from the course.
+
+3. **User friendly error messages**  
+   All invalid inputs produce clear, specific messages so the user understands what went wrong and how to fix it, rather than generic errors.
+
+4. **Edge case handling**  
+   The program explicitly handles:
+   - Deleting from an empty list  
+   - Duplicate employee IDs  
+   - Invalid or out of range menu choices  
+   - Salary values that must always be positive  
+
+5. **Encapsulation of employee data**  
+   All fields in the `Employee` class are declared `private` and accessed only through methods. This ensures that employee records can be modified only through the `Employee` class, following good object oriented design.
+
